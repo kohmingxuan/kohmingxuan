@@ -80,7 +80,7 @@ class VRButton{
             self.renderer.xr.setSession( session );
             self.stylizeElement( button, false, 12, true );
             
-            button.textContent = 'EXIT VR';
+            button.textContent = 'END VR';
 
             currentSession = session;
             
@@ -113,7 +113,7 @@ class VRButton{
         button.onmouseenter = function () {
             
             button.style.fontSize = '12px'; 
-            button.textContent = (currentSession===null) ? 'VR MODE' : 'EXIT VR';
+            button.textContent = (currentSession===null) ? 'VR MODE' : 'END VR';
             button.style.opacity = '1.0';
 
         };
@@ -185,8 +185,8 @@ class VRButton{
         element.style.bottom = '20px';
         if (!ignorePadding) element.style.padding = '12px 6px';
         element.style.border = '1px solid #fff';
-        element.style.borderRadius = '12px';
-        element.style.background = (active) ? 'rgba(255,192,203,1)' : 'rgba(180,20,20,1)';
+        element.style.borderRadius = '4px';
+        element.style.background = (active) ? 'rgba(20,150,80,1)' : 'rgba(180,20,20,1)';
         element.style.color = '#fff';
         element.style.font = `normal ${fontSize}px sans-serif`;
         element.style.textAlign = 'center';
@@ -201,4 +201,5 @@ class VRButton{
 };
 
 export { VRButton };
+
 
