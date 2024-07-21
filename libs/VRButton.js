@@ -4,57 +4,57 @@
  * @author NikLever / http://niklever.com
  */
 
-class VRButton{
+class VRButton {
 
-	constructor( renderer, options ) {
+    constructor( renderer, options ) {
         this.renderer = renderer;
         if (options !== undefined){
             this.onSessionStart = options.onSessionStart;
             this.onSessionEnd = options.onSessionEnd;
             this.sessionInit = options.sessionInit;
             this.sessionMode = ( options.inline !== undefined && options.inline ) ? 'inline' : 'immersive-vr';
-        }else{
+        } else {
             this.sessionMode = 'immersive-vr';
         }
-        
-       if (this.sessionInit === undefined ) this.sessionInit = { optionalFeatures: [ 'local-floor', 'bounded-floor' ] };
-        
+
+        if (this.sessionInit === undefined ) this.sessionInit = { optionalFeatures: [ 'local-floor', 'bounded-floor' ] };
+
         if ( 'xr' in navigator ) {
 
-			const button = document.createElement( 'button' );
-			button.style.display = 'none';
-            button.style.height = '40px';
+            const button = document.createElement( 'button' );
+            button.style.display = 'none';
+            button.style.height = '60px'; // Updated height to make it circular
             
-			navigator.xr.isSessionSupported( this.sessionMode ).then( ( supported ) => {
+            navigator.xr.isSessionSupported( this.sessionMode ).then( ( supported ) => {
 
-				supported ? this.showEnterVR( button ) : this.showWebXRNotFound( button );
+                supported ? this.showEnterVR( button ) : this.showWebXRNotFound( button );
                 if (options && options.vrStatus) options.vrStatus( supported );
                 
-			} );
+            } );
             
             document.body.appendChild( button );
 
-		} else {
+        } else {
 
-			const message = document.createElement( 'a' );
+            const message = document.createElement( 'a' );
 
-			if ( window.isSecureContext === false ) {
+            if ( window.isSecureContext === false ) {
 
-				message.href = document.location.href.replace( /^http:/, 'https:' );
-				message.innerHTML = 'WEBXR NEEDS HTTPS'; 
+                message.href = document.location.href.replace( /^http:/, 'https:' );
+                message.innerHTML = 'WEBXR NEEDS HTTPS'; 
 
-			} else {
+            } else {
 
-				message.href = 'https://immersiveweb.dev/';
-				message.innerHTML = 'WEBXR NOT AVAILABLE';
+                message.href = 'https://immersiveweb.dev/';
+                message.innerHTML = 'WEBXR NOT AVAILABLE';
 
-			}
+            }
 
-			message.style.left = '0px';
-			message.style.width = '100%';
-			message.style.textDecoration = 'none';
+            message.style.left = '0px';
+            message.style.width = '100%';
+            message.style.textDecoration = 'none';
 
-			this.stylizeElement( message, false );
+            this.stylizeElement( message, false );
             message.style.bottom = '0px';
             message.style.opacity = '1';
             
@@ -62,11 +62,11 @@ class VRButton{
             
             if (options.vrStatus) options.vrStatus( false );
 
-		}
+        }
 
     }
 
-	showEnterVR( button ) {
+    showEnterVR( button ) {
 
         let currentSession = null;
         const self = this;
@@ -105,15 +105,18 @@ class VRButton{
 
         button.style.display = '';
         button.style.right = '20px';
-        button.style.width = '80px';
+        button.style.width = '60px'; // Updated width
+        button.style.height = '60px'; // Updated height to make it circular
         button.style.cursor = 'pointer';
+        button.style.background = 'rgba(0,123,255,1)'; // Updated background color
+        button.style.borderRadius = '50%'; // Updated to make the button circular
+        button.style.border = '2px solid #000'; // Updated border
         button.innerHTML = '<i class="fas fa-vr-cardboard"></i>';
-        
 
         button.onmouseenter = function () {
             
             button.style.fontSize = '12px'; 
-            button.textContent = (currentSession===null) ? 'VR MODE' : 'END VR';
+            button.textContent = (currentSession === null) ? 'VR MODE' : 'END VR';
             button.style.opacity = '1.0';
 
         };
@@ -122,20 +125,13 @@ class VRButton{
             
             button.style.fontSize = '30px'; 
             button.innerHTML = '<i class="fas fa-vr-cardboard"></i>';
-            button.style.opacity = '0.5';
+            button.style.opacity = '0.8';
 
         };
 
         button.onclick = function () {
 
             if ( currentSession === null ) {
-
-                // WebXR's requestReferenceSpace only works if the corresponding feature
-                // was requested at session creation time. For simplicity, just ask for
-                // the interesting ones as optional features, but be aware that the
-                // requestReferenceSpace call will fail if it turns out to be unavailable.
-                // ('local' is always available for immersive sessions and doesn't need to
-                // be requested separately.)
 
                 navigator.xr.requestSession( self.sessionMode, self.sessionInit ).then( onSessionStarted );
 
@@ -174,8 +170,6 @@ class VRButton{
         button.style.opacity = '1';
         button.style.fontSize = '13px';
         button.textContent = 'VR NOT SUPPORTED';
-        
-        
 
     }
 
@@ -184,22 +178,18 @@ class VRButton{
         element.style.position = 'absolute';
         element.style.bottom = '20px';
         if (!ignorePadding) element.style.padding = '12px 6px';
-        element.style.border = '1px solid #fff';
-        element.style.borderRadius = '4px';
-        element.style.background = (active) ? 'rgba(20,150,80,1)' : 'rgba(180,20,20,1)';
-        element.style.color = '#fff';
+        element.style.border = '2px solid #000'; // Changed border color and thickness
+        element.style.borderRadius = '50%'; // Changed to make the button circular
+        element.style.background = (active) ? 'rgba(0,123,255,1)' : 'rgba(220,53,69,1)'; // Changed background colors
+        element.style.color = '#fff'; // Text color
         element.style.font = `normal ${fontSize}px sans-serif`;
         element.style.textAlign = 'center';
-        element.style.opacity = '0.5';
+        element.style.opacity = '0.8'; // Changed opacity
         element.style.outline = 'none';
         element.style.zIndex = '999';
 
     }
 
-		
-
 };
 
 export { VRButton };
-
-
