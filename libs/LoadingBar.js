@@ -6,12 +6,31 @@ class LoadingBar{
 		this.domElement.style.left = '0';
 		this.domElement.style.width = '100%';
 		this.domElement.style.height = '100%';
-		this.domElement.style.background = '#000';
+		
+		this.domElement.style.background = '#BBA1CB'; // Change background colour
+		
 		this.domElement.style.opacity = '0.7';
 		this.domElement.style.display = 'flex';
 		this.domElement.style.alignItems = 'center';
 		this.domElement.style.justifyContent = 'center';
 		this.domElement.style.zIndex = '1111';
+		
+		const barContainer = document.createElement("div");
+        	barContainer.style.position = 'relative';
+        	this.domElement.appendChild(barContainer);
+
+        	const textElement = document.createElement("div");
+        	textElement.textContent = "WELCOME TO BOLTON COLLEGE";
+        	textElement.style.position = 'absolute';
+        	textElement.style.top = '-40px'; // Text position
+        	textElement.style.left = '65%';
+        	textElement.style.transform = 'translateX(-50%)';
+        	textElement.style.fontSize = '30px';
+		textElement.style.width = '50%';
+        	textElement.style.color = 'Purple'; // Text colour
+		textElement.style.minWidth = '250px';
+        	barContainer.appendChild(textElement);
+		
 		const barBase = document.createElement("div");
 		barBase.style.background = '#aaa';
 		barBase.style.width = '50%';
