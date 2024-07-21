@@ -17,7 +17,7 @@ class VRButton{
 
 		const button = document.createElement( 'button' );
 		button.style.display = 'none';
-            	button.style.height = '40px';
+            	button.style.height = '25px';
             
 		navigator.xr.isSessionSupported( this.sessionMode ).then( ( supported ) => {
 
@@ -65,7 +65,7 @@ class VRButton{
         let currentSession = null;
         const self = this;
 
-        this.stylizeElement(button, true, 40, true); 
+        this.stylizeElement(button, true, 25, true); 
 
         function onSessionStarted(session) {
 
@@ -109,7 +109,7 @@ class VRButton{
 
         button.onmouseenter = function () {
 
-            button.style.fontSize = '40px'; 
+            button.style.fontSize = '25px'; 
             button.style.transform = 'translate(-50%, -50%) scale(1.5)';
             button.textContent = (currentSession === null) ? 'VR Mode' : 'EXIT VR';
             button.style.opacity = '1.0';
@@ -171,13 +171,13 @@ class VRButton{
 
     }
 
-    stylizeElement(element, active = true, fontSize = 30, ignorePadding = false) {
+    stylizeElement(element, active = true, fontSize = 25, ignorePadding = false) {
 
         element.style.position = 'absolute';
         if (!ignorePadding) element.style.padding = '12px 6px';
         element.style.border = '1px solid #00f';
         element.style.borderRadius = '4px';
-        element.style.background = (active) ? 'rgba(20,150,80,1)' : 'rgba(128,0,128,1)'; // Change loading background color to purple
+        element.style.background = (active) ? 'rgba(20,150,80,1)' : 'rgba(180,20,20,1)';
         element.style.color = '#f00';
         element.style.font = `normal ${fontSize}px sans-serif`;
         element.style.textAlign = 'center';
