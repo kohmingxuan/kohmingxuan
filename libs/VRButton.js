@@ -1,9 +1,3 @@
-/**
- * @author mrdoob / http://mrdoob.com
- * @author Mugen87 / https://github.com/Mugen87
- * @author NikLever / http://niklever.com
- */
-
 class VRButton{
 
 	constructor( renderer, options ) {
@@ -21,13 +15,13 @@ class VRButton{
         
         if ( 'xr' in navigator ) {
 
-			const button = document.createElement( 'button' );
-			button.style.display = 'none';
-            button.style.height = '40px';
+		const button = document.createElement( 'button' );
+		button.style.display = 'none';
+            	button.style.height = '40px';
             
-			navigator.xr.isSessionSupported( this.sessionMode ).then( ( supported ) => {
+		navigator.xr.isSessionSupported( this.sessionMode ).then( ( supported ) => {
 
-				supported ? this.showEnterVR( button ) : this.showWebXRNotFound( button );
+		supported ? this.showEnterVR( button ) : this.showWebXRNotFound( button );
                 if (options && options.vrStatus) options.vrStatus( supported );
                 
 			} );
@@ -55,10 +49,10 @@ class VRButton{
 			message.style.textDecoration = 'none';
 
 			this.stylizeElement( message, false );
-            message.style.bottom = '0px';
-            message.style.opacity = '1';
+            		message.style.bottom = '0px';
+            		message.style.opacity = '1';
             
-            document.body.appendChild ( message );
+            		document.body.appendChild ( message );
             
             if (options.vrStatus) options.vrStatus( false );
 
@@ -71,20 +65,20 @@ class VRButton{
         let currentSession = null;
         const self = this;
         
-        this.stylizeElement( button, true, 30, true );
+        this.stylizeElement( button, true, 40, true );
         
         function onSessionStarted( session ) {
 
-            session.addEventListener( 'end', onSessionEnded );
+        session.addEventListener( 'end', onSessionEnded );
 
-            self.renderer.xr.setSession( session );
-            self.stylizeElement( button, false, 12, true );
+        self.renderer.xr.setSession( session );
+        self.stylizeElement( button, false, 30, true );
             
-            button.textContent = 'EXIT VR';
+        button.textContent = 'EXIT VR';
 
-            currentSession = session;
+        currentSession = session;
             
-            if (self.onSessionStart !== undefined) self.onSessionStart();
+        if (self.onSessionStart !== undefined) self.onSessionStart();
 
         }
 
@@ -92,7 +86,7 @@ class VRButton{
 
             currentSession.removeEventListener( 'end', onSessionEnded );
 
-            self.stylizeElement( button, true, 12, true );
+            self.stylizeElement( button, true, 30, true );
             button.textContent = 'ENTER VR';
 
             currentSession = null;
@@ -104,25 +98,32 @@ class VRButton{
         //
 
         button.style.display = '';
-        button.style.right = '20px';
-        button.style.width = '80px';
+        button.style.width = '200px';
+        button.style.height = '100px';
         button.style.cursor = 'pointer';
         button.innerHTML = '<i class="fas fa-vr-cardboard"></i>';
+        button.style.position = 'absolute';
+        button.style.left = '50%';
+        button.style.top = '50%';
+        button.style.transform = 'translate(-50%, -50%)';
         
 
         button.onmouseenter = function () {
             
-            button.style.fontSize = '12px'; 
-            button.textContent = (currentSession===null) ? 'ENTER VR' : 'EXIT VR';
-            button.style.opacity = '1.0';
+        button.style.fontSize = '40px';
+        button.style.transform = 'translate(-50%, -50%) scale(1.5)';
+        button.textContent = (currentSession === null) ? 'ENTER VR' : 'EXIT VR';
+        button.style.opacity = '1.0';
+        if (currentSession === null) button.style.color = 'blue'; 
 
         };
-
         button.onmouseleave = function () {
             
-            button.style.fontSize = '30px'; 
+           button.style.fontSize = '30px';
+            button.style.transform = 'translate(-50%, -50%)';
             button.innerHTML = '<i class="fas fa-vr-cardboard"></i>';
             button.style.opacity = '0.5';
+            button.style.color = '';
 
         };
 
@@ -186,7 +187,7 @@ class VRButton{
         if (!ignorePadding) element.style.padding = '12px 6px';
         element.style.border = '1px solid #fff';
         element.style.borderRadius = '4px';
-        element.style.background = (active) ? 'rgba(20,150,80,1)' : 'rgba(180,20,20,1)';
+        element.style.background = (active) ? 'rgba(20,150,80,1)' : 'rgba(0,0,255,0.6)';
         element.style.color = '#fff';
         element.style.font = `normal ${fontSize}px sans-serif`;
         element.style.textAlign = 'center';
